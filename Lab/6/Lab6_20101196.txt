@@ -1,0 +1,174 @@
+#task1
+def recursiveselection(a,i,j):
+    if i<len(a):
+        if j<len(a):
+            if a[i]>a[j]:
+                min=a[j]
+                a[j]=a[i]
+                a[i]=min
+            return  recursiveselection(a,i,j+1)
+    else:
+        return a
+    return recursiveselection(a, i + 1,i+2)
+x=[59,7,10,4,1,6]
+#print(recursiveselection(x,0,1))
+#====================================================================
+#task2
+def insertion(a,i,j):
+    if i<len(a):
+        #for j in range(i-1,-1,-1):
+        if j>-1:
+            if a[j]>a[j+1]:
+                temp=a[j]
+                a[j]=a[j+1]
+                a[j+1]=temp
+            return insertion(a,i,j-1)
+
+    else:
+        return a
+    return insertion(a,i+1,i)
+z=[5,2,1,9,6,4]
+print(insertion(z,0,-1))
+#====================================================================
+#task3
+class Node:
+    def __init__(self, element, next):
+        self.element = element
+        self.next = None
+class MyList:
+    def __init__(self, a=None):
+        self.head = None
+        self.tail = None
+        if (type(a) is list):
+            for i in a:
+                n = Node(i, None)
+                if (self.head == None):
+                    self.head = n
+                    tail = n
+                else:
+                    tail.next = n
+                    tail = n
+        elif (type(a) == LinkedList):
+            self.head = None
+            self.tail = None
+            n = a.head
+            while n is not None:
+                newnode = Node(n.element, None)
+                if (self.head == None):
+                    self.head = newnode
+                    tail - newnode
+                else:
+                    tail.next = newnode
+                    tail = newnode
+        elif (type(a) == None):
+            return
+
+    def showList(self):
+        n = self.head
+        while n is not None:
+            if (n == None):
+                print("The list is empty")
+            else:
+                print(n.element,end=" ")
+                n = n.next
+    def bubblesort(self):
+        a=None
+        while a is not self.head.next:
+            temp=self.head
+            while temp.next is not a:
+                t=temp.next
+                if t.element<temp.element:
+                    t.element,temp.element=temp.element,t.element
+                temp=temp.next
+            a=temp
+l1=MyList([5,2,1,9,6,4])
+l1.bubblesort()
+l1.showList()
+#====================================================================
+#task4
+class Node:
+    def __init__(self, element,previous,next):
+        self.element = element
+        self.next = None
+        self.previous=None
+
+class MyList:
+    def __init__(self, a=None):
+        self.head = None
+        self.tail = None
+        if (type(a) is list):
+            for i in a:
+                n = Node(i,None,None)
+                if (self.head == None):
+                    self.head = n
+                    tail = n
+                else:
+                    tail.next = n
+                    n.previous=tail
+                    tail=n
+    def showList(self):
+        n = self.head
+        while n is not None:
+            if (n == None):
+                print("The list is empty")
+            else:
+                print(n.element,end=" ")
+                n = n.next
+    def selection(self):
+        st=self.head
+        while st is not None:
+            p=st.previous
+            while p is not None:
+                if p.element>p.next.element:
+                    temp=p.element
+                    p.element=p.next.element
+                    p.next.element=temp
+                p=p.previous
+            st=st.next
+l1=MyList([5,2,1,9,6,4])
+l1.selection()
+l1.showList()
+
+#====================================================================
+#task6
+r=0
+def binarysearch(a,n,l,u):
+    if l<=u:
+        mid=(l+u)//2
+        if a[mid]==n:
+            globals()['r'] = mid
+            return True
+        else:
+            if a[mid]<n:
+                l=mid+1
+                return binarysearch(a,n,l,u)
+            else:
+                u=mid-1
+                return binarysearch(a,n,l,u)
+    else:
+        return False
+list = [1,2,3,4,5,7,9,11]
+search=5
+low=0
+up=len(list)
+#if binarysearch(list,search,low,up):
+#    print("Found here",r)
+#else:
+#    print("Not Found")
+#====================================================================
+#task7
+fibonacci_cache = {}
+def fibonacci2(n):
+    if n in fibonacci_cache:
+        return fibonacci_cache[n]
+    if n==1:
+        value= 1
+    elif n==2:
+        value= 1
+    elif n>2:
+        value= fibonacci2(n-1)+fibonacci2(n-2)
+    fibonacci_cache[n]=value
+    return value
+p=11
+for n in range(1,p):
+    print(n,":",fibonacci2(n))

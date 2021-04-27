@@ -1,0 +1,65 @@
+#task1
+k=[]
+class keyindex:
+    def __init__(self,a):
+        min=a[0]
+        for b in range(len(a)):
+            if min>a[b]:
+                min=a[b]
+        if min<0:
+            min=min*(-1)
+            for c in range(len(a)):
+                a[c]=a[c]+min
+        max=a[0]
+        for i in range (len(a)):
+            if max<a[i]:
+                max=a[i]
+        globals()['k']=[0]*(max+1)
+        for j in range (len(a)):
+            p=a[j]
+            k[p]=k[p]+1
+        print(k)
+    def search(self,q):
+        if q>(len(k)-1):
+            return False
+        elif k[q]==0:
+            return False
+        else:
+            return True
+    def sort(self):
+        l=[]
+        for i in range(len(k)):
+            if k[i]!=0:
+                for j in range(k[i]):
+                    l.append(i)
+        print(l)
+x=keyindex([-3,-1,6,7,3,3,8])
+if x.search(9):
+    print("Found")
+else:
+    print("Not Found")
+x.sort()
+#=============================================================================
+#task2
+hash=["AB12","AC22","JKH52","OP143","9"]
+k=[0]*9
+vowel=["A","E","I","O","U"]
+number=["0","1","2","3","4","5","6","7","8","9"]
+for i in range(len(hash)):
+    p=0
+    c=0
+    for j in hash[i]:
+        if j not in vowel and j not in number:
+            c+=1
+        if j in number:
+            p=p+int(j)
+    index=((c*24)+(p))%9
+    if k[index]==0:
+        k[index]=hash[i]
+    else:
+        for a in range(len(k)):
+            index = (index + 1 + len(k)) % 9
+            if k[index]==0:
+                k[index]=hash[i]
+                break
+print(k)

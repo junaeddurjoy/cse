@@ -1,0 +1,236 @@
+class Node:
+    def __init__(self, element, next):
+        self.element = element
+        self.next = None
+
+
+class MyList:
+    def __init__(self,a = None):
+        self.head = None
+        self.tail= None
+        if(type(a) is list):
+            for i in a:
+                n=Node(i,None)
+                if (self.head==None):
+                    self.head=n
+                    tail=n
+                else:
+                    tail.next=n
+                    tail=n
+        elif(type(a)==LinkedList):
+            self.head=None
+            self.tail=None
+            n=a.head
+            while n is not None:
+                newnode=Node(n.element,None)
+                if(self.head==None):
+                    self.head=newnode
+                    tail-newnode
+                else:
+                    tail.next=newnode
+                    tail=newnode
+        elif(type(a)==None):
+            return
+        
+
+    def showList(self):
+        n = self.head
+        while n is not None:
+            if (n==None):
+                print("The list is empty")
+            else:
+                print(n.element)
+                n = n.next
+    def isEmpty(self):
+        if self.head==None:
+            print("True")
+        else:
+            print("False")
+    def clear(self):
+        n=self.head
+        while n is not None:
+            if (n==None):
+                print("The list is empty")
+            else:
+                n.element=None
+            n=n.next
+    def insert_last(self,newElement):
+        new=Node(newElement,None)
+        if self.head is None:
+            self.head=new
+        else:
+            n=self.head
+            while n.next is not None:
+                if (n.element==newElement):
+                    break
+                else:
+                    n=n.next
+            if(n.element==newElement):
+                print("Key already exist")
+            else:
+                while n.next is not None:
+                    n=n.next
+                n.next=new
+    def insert_atposition(self,newElement,index):
+        n=self.head
+        while n.next is not None:
+            if (n.element==newElement):
+                 break
+            else:
+                n=n.next
+        if(n.element==newElement):
+            print("Key already exist")
+        else:
+            if index<0:
+                print("wrong INdex")
+            else:
+                new=Node(newElement,None)
+                n=self.head
+                if index==0:
+                    new.next=self.head
+                    self.head=new
+                else:
+                    i=0
+                    while (i<index-1):
+                        n=n.next
+                        i+=1
+                    new.next=n.next
+                    n.next=new
+    def remove(self,delkey):
+        if self.head==None:
+            print("The list is empty")
+        else:
+            if delkey==0:
+                temp=self.head.element
+                print("Deleted value:",temp)
+                self.head=self.head.next
+            else:
+                n=self.head
+                i=1
+                while (delkey-1>=i):
+                    n=n.next
+                    i+=1
+                print("Deleted value:",n.next.element)
+                n.next=n.next.next
+    def segregateEvenOdd(self):
+        n=self.head
+        l=[]
+        while(n is not None):
+            if n.element%2==0:
+                l+=[n.element]
+            n=n.next
+        evenHead=None
+        eventail=None
+        for i in l:
+            n2=Node(i,None)
+            if evenHead is None:
+                evenHead=n2
+                eventail=n2
+            else:
+                eventail.next=n2
+                eventail=n2
+        z=evenHead
+        while z!=None:
+            print(z.element,end="->")
+            z=z.next
+    def search_ele(self,number):
+        n=self.head
+        while n is not None:
+            if n.element==number:
+                break
+            n=n.next
+        if n is None:
+            print("False")
+        else:
+            print("True")
+    def reverse(self):
+        prev=None
+        n=self.head
+        while n is not None:
+            tem=n.next
+            n.next=prev
+            prev=n
+            n=tem
+        self.head=prev
+    def sorting(self):
+        end=None
+        while end!=self.head.next:
+            n=self.head
+            while n.next is not end:
+                m=n.next
+                if n.element>m.element:
+                    n.element,m.element=m.element,n.element
+                n=n.next
+            end=n
+    
+    def sum_elem(self):
+        n=self.head
+        overall=0
+        while n is not None:
+            overall+=n.element
+            n=n.next
+        return(overall)
+    def rotate_byplace(self,side,k):
+        if side=="Right":
+            if k==None:
+                return 
+            prev= None
+            prev2= None
+            p = self.head
+            q =self.head  
+            length=0
+            c1=0 
+            while q is not None:
+                prev= q
+                q= q.next
+                length+=1
+            q= prev 
+            c=length-k
+            while p is not None and c1<c:
+                prev2= p
+                p=p.next
+                c1+=1
+            p=prev2   
+            q.next = self.head
+            self.head = p.next
+            p.next= None
+        elif side=="Left":
+                p = self.head
+                q= self.head
+                prev = None
+                count= 0
+                while p is not None and count<k:
+                    prev= p
+                    p=p.next
+                    count+=1
+                p = prev 
+                while q is not None:
+                    prev= q
+                    q=q.next
+                q= prev
+                q.next= self.head
+                self.head = p.next
+                p.next= None 
+#===================================Tester_Class================================
+          
+l1=[1,2,3,4,5]
+l2=MyList(l1)
+#l2.showList()
+l2.isEmpty()
+#l2.clear()
+#l2.showList()
+#l2.insert_last(6)
+#l2.insert_atposition(2,1)
+#l2.remove(2)
+#l2.showList()
+#l2.segregateEvenOdd()
+#l2.showList()
+#l2.search_ele(89)
+#l2.reverse()
+#l2.showList()
+#l2.sorting()
+#l2.showList()
+#l2.sum_elem()
+#l2.showList()
+l2.rotate_byplace("left",2)
+l2.showList()

@@ -1,0 +1,115 @@
+class Node:
+    def __init__(self, prev, element, next):
+        self.prev = None
+        self.element = element
+        self.next = None
+
+
+class MyList:
+    def __init__(self, a=None):
+        self.head = Node(None, None, None)
+        self.head.next = self.head
+        self.head.prev = self.head
+        if (type(a) is list):
+            for i in a:
+                n = Node(None, i, None)
+                if (self.head.next == None):
+                    n.next = self.head.next
+                    n.prev = self.head
+                    self.head.next = n
+                    n.next.prev = n
+                else:
+                    n.prev = self.head.prev
+                    n.next = n.prev.next
+                    n.prev.next = n
+                    n.next.prev = n
+
+    def showList(self):
+        n = self.head.next
+        if (n.element == None):
+            print("The list is empty")
+            return
+        while n is not self.head:
+            print(n.element, end=' ')
+            n = n.next
+
+    def insert_last(self, newElement):
+        new = Node(None, newElement, None)
+        n = self.head.next
+        while n.next is not self.head:
+            if (n.element == newElement):
+                break
+            else:
+                n = n.next
+        if (n.element == newElement):
+            print("Key already exist")
+        else:
+            new.prev = self.head.prev
+            new.next = new.prev.next
+            new.prev.next = new
+            new.next.prev = new
+
+    def insert_atposition(self, newElement, index):
+        n = self.head.next
+        while n.next is not self.head:
+            if (n.element == newElement):
+                break
+            else:
+                n = n.next
+        if (n.element == newElement):
+            print("Key already exist")
+        else:
+            if index < 0:
+                print("wrong INdex")
+            else:
+                new = Node(None, newElement, None)
+                n = self.head.next
+                if index == 0:
+                    new.prev = self.head
+                    new.next.self.next
+                    self.next = new
+                else:
+                    i = 0
+                    while (i < index):
+                        n = n.next
+                        i += 1
+                    new.prev = n.prev
+                    new.next = n
+                    n.prev.next = new
+                    n.prev = new
+
+    def delementte_node(self, index):
+        n = self.head.next
+        count = -1
+        while n is not self.head:
+            count += 1
+            n = n.next
+        if index < 0 or index > count:
+            print("wrong Index")
+        else:
+            n = self.head.next
+            i = 0
+            while (i < index):
+                n = n.next
+                i += 1
+            n.prev.next = n.next
+            n.next.prev = n.prev
+            n.next = n.prev = n.element = None
+
+    def remove_element(self, key):
+        n = self.head.next
+        while n is not self.head:
+            if (n.element == key):
+                n.prev.next = n.next
+                n.next.prev = n.prev
+                n = n.next
+            else:
+                n = n.next
+
+
+l1 = MyList([1, 2, 3])
+# l1.insert_last(6)
+# l1.insert_atposition(6,3)
+# l1.delementte_node(2)
+# l1.remove_element(5)
+l1.showList()

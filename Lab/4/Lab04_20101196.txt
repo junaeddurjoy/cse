@@ -1,0 +1,93 @@
+#=================task1============================================
+open_list = ["[","{","("]
+close_list = ["]","}",")"]
+class Parentheses:
+    def check(self,s):
+        self.stack=[]
+        self.s=s
+        for i in self.s:
+            if i in open_list:
+                self.stack.append(i)
+            elif i in close_list:
+                if len(self.stack)>0:
+                    p = close_list.index(i)
+                    if open_list[p] == self.stack[len(self.stack)-1]:
+                        self.stack.pop()
+                else:
+                    p=self.s.index(i)
+                    print("The expression NOT correct.")
+                    print("Error at character #", p + 1,"'",i,"' not opened.")
+                    return
+        if len(self.stack)==0:
+            print("The expression is correct.")
+        else:
+            print("The expression NOT correct.")
+            x=len(self.stack)
+            y=self.s.index(self.stack[x-1])
+            if self.stack[x-1] in open_list:
+                print("Error at character #",y+1,". '",self.stack[x-1],"' not closed.")
+s1=Parentheses()
+s1.check("1+2*(3/4)")
+s1.check("1+2*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14")
+s1.check("1+2*[3*3+{4–5(6(7/8/9)+10)}–11+(12*8)/{13+13}]+14")
+s1.check("1+2]*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14")
+
+
+
+
+
+
+
+
+#===================task2=====================================================================
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+class Stack:
+    def __init__(self):
+        self.head=None
+    def push(self,v):
+        newdata=Node(v)
+        if self.head is None:
+            self.head=newdata
+        else:
+            newdata.next=self.head
+            self.head=newdata
+    def pop(self):
+        self.head=self.head.next
+    def peek(self):
+        return self.head.data
+    def isempty(self):
+        if self.head is None:
+            return True
+open_list = ["[", "{", "("]
+close_list = ["]", "}", ")"]
+def check(s):
+    stack1=Stack()
+    k=Stack()
+    c=0
+    for i in s:
+        c+=1
+        if i in close_list and stack1.isempty():
+            print("This expression is NOT correct.")
+            print("Error at character #", c, "'", i, "' not opened.")
+            return
+        elif i in open_list:
+            stack1.push(i)
+            k.push(c)
+        elif i in close_list:
+            if not stack1.isempty():
+                p = close_list.index(i)
+                if open_list[p] == stack1.peek():
+                    stack1.pop()
+                    k.pop()
+    if stack1.isempty():
+        print("This expression is correct.")
+    else:
+        print("This expression is NOT correct.")
+        print("Error at character #",k.peek(),"'",stack1.peek(),"' not closed.")
+check("1+2*(3/4)")
+check("1+2*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14")
+check("1+2*[3*3+{4–5(6(7/8/9)+10)}–11+(12*8)/{13+13}]+14")
+check("1+2]*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14")
